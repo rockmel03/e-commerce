@@ -8,7 +8,7 @@ export class AuthService {
   constructor() {
     this.client
       .setEndpoint(conf.appwriteUrl)
-      .setProject(cont.appwriteProjectId);
+      .setProject(conf.appwriteProjectId);
     this.account = new Account(this.client);
   }
 
@@ -35,6 +35,7 @@ export class AuthService {
       return await this.account.createEmailPasswordSession(email, password);
     } catch (error) {
       console.log("auth::login::Error", error);
+      throw Error(error);
     }
   }
 
