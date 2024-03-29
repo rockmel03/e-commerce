@@ -4,17 +4,20 @@ import { Link, useNavigate } from "react-router-dom";
 import InputField from "./InputField";
 import authService from "../../appwrite/Auth";
 import { ToastContainer, toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { login } from "../../store/reducers/AuthSlice";
 
 const Signup = () => {
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmitForm = (data) => {
     console.log(data);
     authService
       .createAccount(data)
       .then((res) => {
-        console.log(res);
+        dispatch(login(res));
         toast.success("Account created successfully");
         reset();
         navigate("/");
@@ -23,7 +26,6 @@ const Signup = () => {
         console.log(err);
         toast.error("Account creation failed " + err.message);
       });
-    reset();
   };
 
   return (
