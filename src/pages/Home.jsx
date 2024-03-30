@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import ProductCard from "../components/templetes/ProductCard";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const data = useSelector((state) => state.products.productsData);
@@ -55,9 +56,9 @@ const Home = () => {
         <div className="col-span-5 border-l overflow-y-auto">
           <div className="relative flex flex-wrap justify-evenly gap-3 p-3 ">
             {products.map((product, index) => (
-              <a href={`/`} key={product.id}>
+              <Link to={`/details/${product.id}`} key={product.id}>
                 <ProductCard data={product} />
-              </a>
+              </Link>
             ))}
           </div>
         </div>

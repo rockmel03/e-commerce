@@ -33,10 +33,12 @@ const ProductCard = ({ data }) => {
         <h3 className="text-xl font-medium">Price: ${data.price} </h3>
         <div className="flex gap-2 items-center mt-2">
           <h3 className="px-2 py-1 rounded text-sm font-semibold text-white bg-green-500 flex items-center">
-            {data.rating.rate}&nbsp;
+            {data.rating?.rate && data.rating.rate}&nbsp;
             <IoMdStar />
           </h3>
-          <h3 className="text-sm opacity-80">{data.rating.count} </h3>
+          <h3 className="text-sm opacity-80">
+            {data.rating?.count && data.rating.count}
+          </h3>
         </div>
       </div>
     </div>

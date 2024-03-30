@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setAllProducts } from "./store/reducers/ProductsSlice";
+import ProductDetails from "./pages/ProductDetails";
 
 const data = [
   {
@@ -295,6 +296,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/details/:id" element={<ProductDetails />} />
         </Routes>
 
         <Footer />
