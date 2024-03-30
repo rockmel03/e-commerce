@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import InputField from "./InputField";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../../appwrite/Auth";
-import { ToastContainer, toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 import { login } from "../../store/reducers/AuthSlice";
 const Login = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -19,7 +19,7 @@ const Login = () => {
         dispatch(login(res));
         toast.success("login success");
         reset();
-        navigate('/');
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);
@@ -64,7 +64,6 @@ const Login = () => {
           <Link to="/signup">Create Account</Link>
         </span>
       </p>
-      <ToastContainer />
     </form>
   );
 };

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import InputField from "./InputField";
 import authService from "../../appwrite/Auth";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { login } from "../../store/reducers/AuthSlice";
 
@@ -78,7 +78,6 @@ const Signup = () => {
           </span>
         </p>
       </form>
-      <ToastContainer />
     </>
   );
 };

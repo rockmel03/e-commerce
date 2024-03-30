@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import { FaShoppingCart, FaUserCircle } from "react-icons/fa";
-import { RiSearch2Line } from "react-icons/ri";
 import SearchBar from "./SearchBar";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,9 +16,8 @@ const Navbar = () => {
   const logoutHandler = () => {
     authService.logout().then((res) => {
       toast.success("Logout Successfully");
-      console.log(res);
+      dispatch(logout());
     });
-    dispatch(logout());
   };
 
   return (
