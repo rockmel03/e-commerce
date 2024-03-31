@@ -1,7 +1,7 @@
 // create services like
 // create, deleate , update , getsingle, getmultiple, query
 
-import { Client, Databases, ID, Storage } from "appwrite";
+import { Client, Databases, ID, Query, Storage } from "appwrite";
 import conf from "../conf/conf";
 
 export class Service {
@@ -60,6 +60,28 @@ export class Service {
         conf.appwriteProductsImagesBucketId,
         ID.unique(),
         file
+      );
+    } catch (error) {
+      throw Error(error);
+    }
+  }
+
+  async getProducts(query) {
+    try {
+      return await this.databases.listDocuments(
+        conf.appwriteProductsDatabaseId,
+        conf.appwriteProductsCollectionId,
+        query ? query : undefined
+      );
+    } catch (error) {
+      throw Error(error);
+    }
+  }
+  async getImagePreview(fileId) {
+    try {
+      return this.bucket.getFilePreview(
+        conf.appwriteProductsImagesBucketId,
+        fileId
       );
     } catch (error) {
       throw Error(error);
