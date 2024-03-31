@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import { useSelector } from "react-redux";
 import { IoMdStar } from "react-icons/io";
@@ -12,7 +12,7 @@ const ProductDetails = () => {
 
   console.log(data?.seller === userData?.$id);
   return (
-    id && (
+    data && (
       <section>
         <Layout className="flex justify-evenly items-start gap-10">
           <div className="w-[30%]  p-5 ">
@@ -46,8 +46,20 @@ const ProductDetails = () => {
                 Buy Now
               </button>
             </div>
-
-           
+            <div className="flex  gap-4">
+              <Link
+                to={`edit/${id}`}
+                className="text-md font-medium px-4 py-2 rounded text-black bg-yellow-400"
+              >
+                Edit
+              </Link>
+              <Link
+                to=""
+                className="text-md font-medium px-4 py-2 rounded text-black bg-yellow-500"
+              >
+                Delete
+              </Link>
+            </div>
           </div>
         </Layout>
       </section>

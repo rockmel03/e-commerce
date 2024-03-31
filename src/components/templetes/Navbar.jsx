@@ -40,12 +40,20 @@ const Navbar = () => {
           className="hidden max-w-80 p-3 fixed right-0 top-[10vh] bg-white shadow-xl"
         >
           {loginStatus ? (
-            <button
-              onClick={logoutHandler}
-              className="px-4 py-2 text-sm font-semibold text-white bg-blue-500 border rounded-md active:scale-90 duration-200 transition-all"
-            >
-              Logout
-            </button>
+            <div className="flex justify-around gap-5">
+              <button
+                onClick={logoutHandler}
+                className="px-4 py-2 text-sm font-semibold text-white bg-blue-500 border rounded-md active:scale-90 duration-200 transition-all"
+              >
+                Logout
+              </button>
+              <Link
+                to="/add"
+                className="px-4 py-2 text-sm font-semibold text-white bg-blue-500 border rounded-md active:scale-90 duration-200 transition-all"
+              >
+                Add product
+              </Link>
+            </div>
           ) : (
             <div className="flex justify-around gap-5">
               <Link
