@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoMdStar } from "react-icons/io";
+import appwriteService from "../../appwrite/Config";
 
 const ProductCard = ({ data }) => {
   // {
@@ -15,11 +16,13 @@ const ProductCard = ({ data }) => {
   //       count: 120,
   //     },
   //   },
+  const [image, setImage] = useState("");
+  appwriteService.getImagePreview(data.image).then((res) => setImage(res.href));
 
   return (
     <div className="max-w-72 min-w-56 aspect-[3/4] p-3 flex flex-col gap-2 rounded-md bg-white text-black shadow-md overflow-hidden">
       <div className="w-full h-[60%] overflow-hidden">
-        <img src={data.image} alt="" className="w-full h-full object-contain" />
+        <img src={image} alt="" className="w-full h-full object-contain" />
       </div>
       <div>
         <h2 className="text-xl font-semibold leading-tight">

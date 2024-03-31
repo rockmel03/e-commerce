@@ -56,7 +56,7 @@ const Home = () => {
         <div className="col-span-5 border-l overflow-y-auto">
           <div className="relative flex flex-wrap justify-evenly gap-3 p-3 ">
             {products.map((product, index) => (
-              <Link to={`/details/${product.id}`} key={product.id}>
+              <Link to={`/details/${product.$id}`} key={product.$id}>
                 <ProductCard data={product} />
               </Link>
             ))}

@@ -1,23 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import { useSelector } from "react-redux";
 import { IoMdStar } from "react-icons/io";
+import appwriteService from "../appwrite/Config";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const { productsData } = useSelector((state) => state.products);
   const { userData } = useSelector((state) => state.auth);
-  const data = productsData.find((p) => p.id == id);
+  const data = productsData.find((p) => p.$id == id);
 
-  console.log(data?.seller === userData?.$id);
+  const [image, setImage] = useState("");
+
+  appwriteService
+    .getImagePreview(data.image)
+    .then((res) => setImage(res.href))
+    .catch((error) => console.log(error));
+
   return (
     data && (
       <section>
         <Layout className="flex justify-evenly items-start gap-10">
           <div className="w-[30%]  p-5 ">
             <img
-              src={data.image}
+              src={image}
               alt=""
               className="w-full h-full object-contain object-center"
             />
