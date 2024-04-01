@@ -51,7 +51,7 @@ export class Service {
         slug
       );
     } catch (error) {
-      console.log("Services:: deleteProduct :: Error", error);
+      throw Error(error);
     }
   }
   async uploadFile(file) {
@@ -60,6 +60,16 @@ export class Service {
         conf.appwriteProductsImagesBucketId,
         ID.unique(),
         file
+      );
+    } catch (error) {
+      throw Error(error);
+    }
+  }
+  async deleteFile(fileId) {
+    try {
+      return await this.bucket.deleteFile(
+        conf.appwriteProductsImagesBucketId,
+        fileId
       );
     } catch (error) {
       throw Error(error);
