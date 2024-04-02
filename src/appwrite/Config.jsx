@@ -30,13 +30,13 @@ export class Service {
     }
   }
 
-  async updateProduct({ id, image, title, description, price, category }) {
+  async updateProduct({ id, ...data }) {
     try {
       return await this.databases.updateDocument(
         conf.appwriteProductsDatabaseId,
         conf.appwriteProductsCollectionId,
         id,
-        { image, title, description, price, collection } //[TODO]:status bhi add krna hai
+        data //{ image, title, description, price, category, seller }
       );
     } catch (error) {
       console.log("Services:: updateProduct :: Error", error);
