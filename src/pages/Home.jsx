@@ -2,68 +2,70 @@ import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import ProductCard from "../components/templetes/ProductCard";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-const Home = () => {
-  const data = useSelector((state) => state.products.productsData);
+const SideNav = () => {
+  const { productsData } = useSelector((state) => state.products);
 
-  const [category, setCategory] = useState([]);
-  const [products, setProducts] = useState([]);
-
-  const categoryHandler = (category) => {
-    if (category == "all") {
-      setProducts(data);
-    }
-    const filterData = data.filter((data) => data.category == category);
-    setProducts(filterData);
-  };
-
-  useEffect(() => {
-    //   let _category = new Set(data.map((data) => data.category)); // it will return an object
-    let _category = data
-      .map((data) => data.category)
-      .reduce((acc, curr) => {
-        if (!acc.includes(curr)) {
-          acc = [...acc, curr];
-        }
-        return acc;
-      }, []);
-    setProducts(data);
-    setCategory(_category);
-  }, [data]);
+  const _category = productsData ? productsData.map((p) => p.category) : "";
+  const categories = [...new Set(_category)];
 
   return (
+    <aside className="w-full">
+      <h2 className="text-2xl font-bold capitalize">category</h2>
+      <hr className="my-3" />
+      <ul className="flex flex-col gap-2">
+        {categories &&
+          categories.map((item, idx) => (
+            <Link
+              to={`/?category=${item}`}
+              className="px-3 py-3 rounded capitalize text-lg font-medium w-full bg-zinc-100 cursor-pointer hover:bg-zinc-200"
+              key={idx}
+            >
+              {item}
+            </Link>
+          ))}
+      </ul>
+    </aside>
+  );
+};
+
+const Home = () => {
+  const { productsData } = useSelector((state) => state.products);
+  const [products, setProducts] = useState(null);
+
+  const { search } = useLocation();
+  const queryCategory = decodeURIComponent(search.split("=")[1]);
+
+  useEffect(() => {
+    if (!products || queryCategory == "undefined") {
+      setProducts(productsData);
+    }
+    if (queryCategory != "undefined") {
+      setProducts(productsData.filter((p) => p.category == queryCategory));
+    }
+  }, [queryCategory, productsData]);
+
+  return products?.length > 0 ? (
     <main>
-      <Layout className={`grid grid-cols-6 grid-rows-1 items-start`}>
-        <div className="col-span-1 pr-3 sticky top-[15vh]">
-          <h2 className="text-2xl font-bold capitalize">category</h2>
-          <hr className="my-3" />
-          <ul className="flex flex-col gap-2">
-            {category &&
-              category.map((item, idx) => (
-                <li
-                  onClick={() => {
-                    categoryHandler(item);
-                  }}
-                  className="px-3 py-3 rounded capitalize text-lg font-medium w-full bg-zinc-100 cursor-pointer"
-                  key={idx}
-                >
-                  {item}
-                </li>
-              ))}
-          </ul>
+      <Layout className="flex items-start justify-between">
+        <div className="w-[20%]  px-3 sticky top-[12vh]">
+          <SideNav />
         </div>
-        <div className="col-span-5 border-l overflow-y-auto">
-          <div className="relative flex flex-wrap justify-evenly gap-3 p-3 ">
-            {products.map((product, index) => (
-              <Link to={`/details/${product.$id}`} key={product.$id}>
-                <ProductCard data={product} />
-              </Link>
-            ))}
-          </div>
+        <div className="w-[80%] flex flex-wrap gap-5 pl-3 border-l-[3px] overflow-auto">
+          {products &&
+            products.map((item, idx) => {
+              return (
+                <Link to={`/details/${item.$id}`} key={item.$id}>
+                  <ProductCard data={item} />
+                </Link>
+              );
+            })}
         </div>
       </Layout>
     </main>
+  ) : (
+    <h1 className="text-xl text-center">Loading...</h1>
   );
 };
 
