@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 const Navbar = () => {
   const navigate = useNavigate();
   const { loginStatus } = useSelector((state) => state.auth);
+  const { cart } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const profileRef = useRef(null);
 
@@ -71,11 +72,18 @@ const Navbar = () => {
             </div>
           )}
         </div>
-        <div className="w-10 h-10 rounded-full hover:bg-zinc-400 flex items-center justify-center text-2xl duration-200 cursor-pointer relative">
+        <Link
+          to="/cart"
+          className="w-10 h-10 rounded-full hover:bg-zinc-400 flex items-center justify-center text-2xl duration-200 cursor-pointer relative"
+        >
           <FaShoppingCart />
-          <span className="p-1 bg-red-500 rounded-full animate-[ping_1s_ease_infinite] absolute top-0.5 right-0.5"></span>
-          <span className="p-1 bg-red-500 rounded-full  absolute top-0.5 right-0.5"></span>
-        </div>
+          {cart.items.length > 0 && (
+            <>
+              <span className="p-1 bg-red-500 rounded-full animate-[ping_1s_ease_infinite] absolute top-0.5 right-0.5"></span>
+              <span className="p-1 bg-red-500 rounded-full  absolute top-0.5 right-0.5"></span>
+            </>
+          )}
+        </Link>
       </div>
     </nav>
   );
